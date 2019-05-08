@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Excel 汇总</title>
+    <link rel="stylesheet" href="css/ExcelStyle.css">
+  </head>
+  <body>
+    <div class="main-inner">
+      <h1>
+        Excel 汇总
+        <p>说明：多个excel列表合并到一个文件里</p>
+      </h1>
+      <h3>两种方法</h3>
+      <div class="f1">
+        <h4>方法1 利用Excel的power query</h4>
+        <p>选择【数据】-【新建查询】-【从文件】-【从文件夹】-【选择路径】</p>
+      </div>
+      <div class="f2">
+        <h4>方法2 利用代码</h4>
+        <p>1，把多个文件放在同一个文件夹里</p>
+        <p>2，选择汇总的文件Excel，选择下方steet N，右键查看代码</p>
+        <p>3,输入下面代码</p>
+        <ul>
+          <li>Sub Macro1()</li>
+          <li>Dim MyPath$, MyName$, sh As Worksheet, sht As Worksheet, m&</li>
+          <li>Set sh = ActiveSheet</li>
+          <li>MyPath = ThisWorkbook.Path & "\"</li>
+          <li>MyName = Dir(MyPath & "*.xls")</li>
+          <li>Application.ScreenUpdating = False</li>
+          <li>Cells.ClearContents</li>
+          <li>Do While MyName <> ""</li>
+          <li>If MyName <> ThisWorkbook.Name Then</li>
+          <li>With GetObject(MyPath & MyName)</li>
+          <li>For Each sht In .Sheets</li>
+          <li>If IsSheetEmpty = IsEmpty(sht.UsedRange) Then</li>
+          <li>m = m + 1</li>
+          <li>If m = 1 Then</li>
+          <li>sht.[a1].CurrentRegion.Copy sh.[a1]</li>
+          <li>Else</li>
+          <li>sht.[a1].CurrentRegion.Offset(1).Copy sh.[a65536].End(xlUp).Offset(1)</li>
+          <li>End If</li>
+          <li>End If</li>
+          <li>Next</li>
+          <li>.Close False</li>
+          <li>End With</li>
+          <li>End If</li>
+          <li>MyName = Dir</li>
+          <li>Loop</li>
+          <li>Application.ScreenUpdating = True</li>
+          <li>End Sub</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
